@@ -1,13 +1,16 @@
-.label {
-  display: flex;
-  flex-wrap: wrap;
-  width: 300px;
-  margin: 0 auto;
-  padding: 0 20px;
-  font-weight: 500;
-  font-size: 16px;
-  gap: 10px;
+.loader {
+  width: 400px;
+  height: 400px;
+  margin: 25vh auto;
+  animation: loading-spinner 0.4s infinite linear;;
 }
 
-.inputFilter {
+@keyframes loading-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+          
+  100% {
+    transform: rotate(360deg);
+  }
 }

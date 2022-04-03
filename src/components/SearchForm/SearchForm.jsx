@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import css from './SearchForm.module.css'
 import propTypes from 'prop-types'
+import {BiSearchAlt} from 'react-icons/bi'
 
 class SearchForm extends Component {
         state = {
@@ -20,15 +21,18 @@ class SearchForm extends Component {
         if (this.state.queryValue.trim() === "") {
             return
         }
-        this.props.onSubmit(this.state.queryValue.toLowerCase() )
+        this.props.onSubmit(this.state.queryValue.toLowerCase())
         this.setState({queryValue:''})
     }
 
     render() {
         return (
             <form className={ css.SearchForm} onSubmit={this.handleSubmitForm}>
-                    <button type="submit" className={ css.SearchForm__button}>
-                        <span className={css.SearchForm__button__label}>Search</span>
+                        <button type="submit" className={ css.SearchForm__button}>
+                        {/* <span className={css.SearchForm__button__label}>
+                        <ImSpinner size="32" className="icon-spin"/> 
+                    </span> */}
+                        <BiSearchAlt size="32" className="icon-search"/> 
                         </button>
 
                         <input

@@ -13,11 +13,17 @@ import Button from './Button/Button'
 class App extends Component {
 
   state = {
-    query:'',
+    query: '',
+    page: 1,
   }
-  
+
   handleSubmit = query => {
-    this.setState({ query })
+    this.setState({ query,page:1 })
+    // setTimeout(()=>console.log(this.state),100)
+    console.log(this.state);
+  }
+  handleLoadMore = page => {
+    this.setState({ page })
     // setTimeout(()=>console.log(this.state),100)
     console.log(this.state);
   }
@@ -30,8 +36,8 @@ class App extends Component {
         <Searchbar>
           <SearchForm onSubmit={this.handleSubmit}/>
         </Searchbar>
-        <ImageGallery queryText={ this.state.query }/>
-        <Button/>
+        <ImageGallery queryText={this.state.query} pageNumber={ this.state.page}/>
+        <Button currentPage={this.state.page} nextPage={ this.handleLoadMore }/>
         
       </div>
     )
