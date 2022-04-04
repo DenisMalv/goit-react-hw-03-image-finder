@@ -4,6 +4,7 @@ import css from './ImageGallery.module.css'
 import ImageGalleryItem from "components/ImageGalleryItem/ImageGalleryItem";
 import Loader from '../Loader/Loader'
 import galleryApi from '../../services/image-gallery-api'
+import Modal from '../Modal/Modal'
 
 // const KEY = '25247734-434310231cfff4911c33dadc4'
 
@@ -83,7 +84,8 @@ class ImageGallery extends Component {
                 {
                 this.state.queryResponponce.map(({ id, largeImageURL, webformatURL }) => <ImageGalleryItem id={id} largeImage={largeImageURL} smalImage={webformatURL} key={id} />)
                 }
-            </ul>;
+                </ul>
+                ;
         }
         if (this.state.status === 'rejected') {
             console.log(this.state);
