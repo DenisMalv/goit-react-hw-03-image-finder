@@ -1,59 +1,36 @@
-import React, {Component} from "react";
-import { createPortal} from 'react-dom'
-import propTypes from "prop-types";
-import css from './Modal.module.css'
+import React, { Component } from 'react';
+import { createPortal } from 'react-dom';
+import propTypes from 'prop-types';
+import { ModalWindow, Overlay } from './Modal.styled';
 
 const modalRoot = document.querySelector('#modal-root');
 
-// const Modal = ({children}) => {
-//     return createPortal(
-//         <div className={css.Overlay}>
-//             <div className={css.Modal}>
-//                 { children }
-//             </div>
-//         </div>,
-//         modalRoot
-//         )
-// }
 class Modal extends Component {
-    componentDidMount() {
-        window.addEventListener('keydown', this.handleKeyDown)
-    }
-    componentWillUnmount() {
-        window.removeEventListener('keydown',this.handleKeyDown)
-    }
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleCloseModal);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleCloseModal);
+  }
 
-    handleKeyDown = (e) => {
-            if (e.code === 'Escape') {
-                console.log('object');
-                this.props.onClose()
-            }
+  handleCloseModal = e => {
+    if (e.code === 'Escape' || e.currentTarget === e.target) {
+      this.props.onClose();
     }
+  };
 
-    handleBackDrop = e => {
-                console.log(e.currentTarget);
-        console.log(e.target);
-        if (e.currentTarget === e.target) {
-            console.log('backdrop');
-
-            this.props.onClose()
-        }
-    }
-    
-    render() {
-        return createPortal(
-        <div className={css.Overlay} onClick={this.handleBackDrop}>
-            <div className={css.Modal}>
-                { this.props.children }
-            </div>
-        </div>,
-        modalRoot
-        )
-    }
+  render() {
+    return createPortal(
+      <Overlay onClick={this.handleCloseModal}>
+        <ModalWindow>{this.props.children}</ModalWindow>
+      </Overlay>,
+      modalRoot
+    );
+  }
 }
 
 Modal.propTypes = {
+  children: propTypes.node.isRequired,
+};
 
-    }
-
-export default Modal
+export default Modal;

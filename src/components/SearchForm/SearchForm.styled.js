@@ -1,4 +1,6 @@
-.SearchForm {
+import styled from '@emotion/styled';
+
+export const Form = styled.form`
   display: flex;
   align-items: center;
   width: 100%;
@@ -6,9 +8,8 @@
   background-color: #fff;
   border-radius: 3px;
   overflow: hidden;
-}
-
-.SearchForm__button {
+`;
+export const SearchButton = styled.button`
   display: inline-block;
   width: 48px;
   height: 48px;
@@ -21,26 +22,23 @@
   cursor: pointer;
   outline: none;
   position: relative;
-}
-
-.SearchForm__button:hover {
-  opacity: 1;
-}
-
-.SearchForm__button__label {
-  display: block;
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  clip-path: inset(50%);
-  border: 0;
-}
-
-.SearchForm__input {
+  :hover {
+    opacity: 1;
+  }
+  label {
+    display: block;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    clip-path: inset(50%);
+    border: 0;
+  }
+`;
+export const SearchInput = styled.input`
   display: inline-block;
   width: 100%;
   font: inherit;
@@ -49,9 +47,8 @@
   outline: none;
   padding-left: 4px;
   padding-right: 4px;
-}
-
-.SearchForm__input::placeholder {
-  font: inherit;
-  font-size: 18px;
-}
+  :placeholder {
+    font: inherit;
+    font-size: 18px;
+  }
+`;

@@ -1,48 +1,72 @@
-import React, { Component } from "react";
-import { nanoid } from 'nanoid'
+import React, { Component } from 'react';
+import { MainContainer } from './App.styled.js';
 
-import Loader from "./Loader/Loader";
-import Searchbar from "./Searchbar/Searchbar";
-import SearchForm from "./SearchForm/SearchForm";
-import ImageGallery from "./ImageGallery/ImageGallery";
-import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem'
-import Button from './Button/Button'
+import Searchbar from './Searchbar/Searchbar';
+import SearchForm from './SearchForm/SearchForm';
+import ImageGallery from './ImageGallery/ImageGallery';
+import Button from './Button/Button';
 
-
+import galleryApi from '../services/image-gallery-api';
 
 class App extends Component {
-
   state = {
     query: '',
-    page: 1,
+    page: 0,
+    queryResponponce: [],
+    error: null,
+    status: '',
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    const { query, page } = this.state;
+
+    if (prevState.query !== query || prevState.page !== page) {
+      this.setState({ status: 'pending' });
+      if (page === 1) {
+        this.setState({ queryResponponce: [] });
+      }
+
+      galleryApi
+        .fetchImages(query, page)
+        .then(({ hits }) => {
+          const smallHits = galleryApi.smallFetchResponse(hits);
+          this.setState(({ queryResponponce }) => ({
+            queryResponponce: [...queryResponponce, ...smallHits],
+            status: 'resolved',
+          }));
+          window.scrollBy({
+            top: document.body.clientHeight,
+            behavior: 'smooth',
+          });
+        })
+        .catch(error => this.setState({ error, status: 'rejected' }));
+    }
   }
 
   handleSubmit = query => {
-    this.setState({ query,page:1 })
-    // setTimeout(()=>console.log(this.state),100)
-    console.log(this.state);
-  }
-  handleLoadMore = page => {
-    this.setState({ page })
-    // setTimeout(()=>console.log(this.state),100)
-    console.log(this.state);
-  }
+    this.setState({ query, page: 1 });
+  };
+  handleLoadMore = () => {
+    this.setState(prevState => ({ ...prevState, page: prevState.page + 1 }));
+  };
 
   render() {
-
+    const { page, queryResponponce, status } = this.state;
+    console.log(this.state.page);
     return (
-      <div className='App'>
-        
+      <MainContainer>
         <Searchbar>
-          <SearchForm onSubmit={this.handleSubmit}/>
+          <SearchForm onSubmit={this.handleSubmit} />
         </Searchbar>
-        <ImageGallery queryText={this.state.query} pageNumber={ this.state.page}/>
-        <Button currentPage={this.state.page} nextPage={ this.handleLoadMore }/>
-        
-      </div>
-    )
+        <ImageGallery images={queryResponponce} />
+        <Button
+          currentPage={page}
+          nextPage={this.handleLoadMore}
+          status={status}
+        />
+      </MainContainer>
+    );
   }
-};
+}
 
-export default App
-
+export default App;

@@ -1,48 +1,40 @@
-import React, { Component} from "react";
-import css from './ImageGalleryItem.module.css'
-import propTypes from "prop-types";
-import Modal from "components/Modal/Modal";
-
-// const ImageGalleryItem = ({ id,LargeImage,smalImage}) => {
-//     return (
-//         <li className={css.ImageGalleryItem}>
-//             <img className={css.ImageGalleryItem__image} src={smalImage} alt="#" />
-//             <Modal id={ id } srcImage={ LargeImage } />
-//         </li>
-//     )
-// }
+import React, { Component } from 'react';
+import { Item, Image } from './ImageGalleryItem.styled';
+import propTypes from 'prop-types';
+import Modal from 'components/Modal/Modal';
 
 class ImageGalleryItem extends Component {
-    state = {
-        showModal: false
-    }
+  state = {
+    showModal: false,
+  };
 
-    toggleModal = () => {
-            this.setState(({ showModal })=>({showModal: !showModal}))
-    }
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({ showModal: !showModal }));
+  };
 
-    render() {
-        console.log(this.state);
-        console.log(this.props.largeImage);
+  render() {
+    const { smalImage, largeImage, id } = this.props;
+    const { showModal } = this.state;
 
-        return (
-        <li className={css.ImageGalleryItem} >
-            <img className={css.ImageGalleryItem__image} src={this.props.smalImage} alt="#" onClick={this.toggleModal}/>
-            {this.state.showModal &&
-                    <>
-                    <Modal onClose={this.toggleModal}>
-                        <img src={this.props.largeImage} alt="" id={this.props.id} />
-                    </Modal>
-                </>
-            }
-
-        </li>
-        )
-    }
+    return (
+      <Item>
+        <Image src={smalImage} alt="#" onClick={this.toggleModal} />
+        {showModal && (
+          <>
+            <Modal onClose={this.toggleModal}>
+              <img src={largeImage} alt="" id={id} />
+            </Modal>
+          </>
+        )}
+      </Item>
+    );
+  }
 }
 
 ImageGalleryItem.propTypes = {
- 
-}
+  id: propTypes.number.isRequired,
+  largeImage: propTypes.string.isRequired,
+  smalImage: propTypes.string.isRequired,
+};
 
-export default ImageGalleryItem
+export default ImageGalleryItem;

@@ -1,54 +1,50 @@
-import React,{Component} from 'react'
-import css from './SearchForm.module.css'
-import propTypes from 'prop-types'
-import {BiSearchAlt} from 'react-icons/bi'
+import React, { Component } from 'react';
+import { Form, SearchButton, SearchInput } from './SearchForm.styled';
+import propTypes from 'prop-types';
+import { BiSearchAlt } from 'react-icons/bi';
 
 class SearchForm extends Component {
-        state = {
-        queryValue: '',
+  state = {
+    queryValue: '',
+  };
+
+  handleImputChange = event => {
+    const { value } = event.currentTarget;
+
+    this.setState({ queryValue: value });
+  };
+
+  handleSubmitForm = event => {
+    event.preventDefault();
+    if (this.state.queryValue.trim() === '') {
+      return;
     }
+    this.props.onSubmit(this.state.queryValue.toLowerCase());
+    this.setState({ queryValue: '' });
+  };
 
-    handleImputChange = event => {
-        const { value } = event.currentTarget
-        console.log(value);
-        console.log(this.state);
-        
-        this.setState({ queryValue: value})
-    }
+  render() {
+    return (
+      <Form onSubmit={this.handleSubmitForm}>
+        <SearchButton type="submit">
+          <BiSearchAlt size="32" />
+        </SearchButton>
 
-    handleSubmitForm = event => {
-        event.preventDefault()
-        if (this.state.queryValue.trim() === "") {
-            return
-        }
-        this.props.onSubmit(this.state.queryValue.toLowerCase())
-        this.setState({queryValue:''})
-    }
-
-    render() {
-        return (
-            <form className={ css.SearchForm} onSubmit={this.handleSubmitForm}>
-                        <button type="submit" className={ css.SearchForm__button}>
-                        {/* <span className={css.SearchForm__button__label}>
-                        <ImSpinner size="32" className="icon-spin"/> 
-                    </span> */}
-                        <BiSearchAlt size="32" className="icon-search"/> 
-                        </button>
-
-                        <input
-                        className={css.SearchForm__input}
-                        type="text"
-                        autoComplete="off"
-                        autoFocus
-                        placeolder="Search images and photos"
-                        onChange={this.handleImputChange}
-                        value={this.state.queryValue}
-                        />
-                    </form>
-        )
-    }
-
+        <SearchInput
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeolder="Search images and photos"
+          onChange={this.handleImputChange}
+          value={this.state.queryValue}
+        />
+      </Form>
+    );
+  }
 }
 
+SearchForm.propTypes = {
+  onSubmit: propTypes.func.isRequired,
+};
 
-export default SearchForm
+export default SearchForm;
