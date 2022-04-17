@@ -19,7 +19,6 @@ class App extends Component {
     error: null,
     status: '',
     showModal: false,
-    id: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
