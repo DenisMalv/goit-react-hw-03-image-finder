@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 import { ImageGalleryList } from './ImageGallery.styled';
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 
-const ImageGallery = ({ images }) => {
+const ImageGallery = ({ images, modalWindow, modalObject }) => {
   console.log(images);
   return (
     <ImageGalleryList>
@@ -12,6 +12,8 @@ const ImageGallery = ({ images }) => {
           id={id}
           largeImage={largeImageURL}
           smalImage={webformatURL}
+          modalWindow={modalWindow}
+          modalObject={modalObject}
           key={id}
         />
       ))}

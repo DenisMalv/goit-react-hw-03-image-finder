@@ -6,16 +6,20 @@ import SearchForm from './SearchForm/SearchForm';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
 import Loader from './Loader/Loader';
+import Modal from './Modal/Modal';
 
 import galleryApi from '../services/image-gallery-api';
 
 class App extends Component {
+  modalObject = {};
   state = {
     query: '',
     page: 0,
     queryResponponce: [],
     error: null,
     status: '',
+    showModal: false,
+    id: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -51,16 +55,30 @@ class App extends Component {
     this.setState(prevState => ({ ...prevState, page: prevState.page + 1 }));
   };
 
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({ showModal: !showModal }));
+  };
+
+  handleModalLargeImage = id => {
+    this.modalObject = this.state.queryResponponce.find(
+      element => element.id === id
+    );
+  };
+
   render() {
-    const { page, queryResponponce, status } = this.state;
-    console.log(this.state.page);
+    const { page, queryResponponce, status, showModal } = this.state;
+
     return (
       <MainContainer>
         <Searchbar>
           <SearchForm onSubmit={this.handleSubmit} />
         </Searchbar>
         {queryResponponce.length !== 0 && (
-          <ImageGallery images={queryResponponce} />
+          <ImageGallery
+            images={queryResponponce}
+            modalWindow={this.toggleModal}
+            modalObject={this.handleModalLargeImage}
+          />
         )}
         {status === 'pending' && <Loader />}
         {status === 'resolved' && (
@@ -69,6 +87,17 @@ class App extends Component {
             nextPage={this.handleLoadMore}
             status={status}
           />
+        )}
+        {showModal && (
+          <>
+            <Modal onClose={this.toggleModal}>
+              <img
+                src={this.modalObject.largeImageURL}
+                alt=""
+                id={this.modalObject.id}
+              />
+            </Modal>
+          </>
         )}
       </MainContainer>
     );
