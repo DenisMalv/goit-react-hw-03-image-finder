@@ -3,17 +3,15 @@ import propTypes from 'prop-types';
 import { ImageGalleryList } from './ImageGallery.styled';
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 
-const ImageGallery = ({ images, modalWindow, modalObject }) => {
-  console.log(images);
+const ImageGallery = ({ images, toggleModal, modalImage }) => {
   return (
     <ImageGalleryList>
       {images.map(({ id, largeImageURL, webformatURL }) => (
         <ImageGalleryItem
-          id={id}
           largeImage={largeImageURL}
           smalImage={webformatURL}
-          modalWindow={modalWindow}
-          modalObject={modalObject}
+          toggleModal={toggleModal}
+          modalImage={modalImage}
           key={id}
         />
       ))}
@@ -29,6 +27,8 @@ ImageGallery.propTypes = {
       webformatURL: propTypes.string.isRequired,
     })
   ).isRequired,
+  toggleModal: propTypes.func.isRequired,
+  modalImage: propTypes.func.isRequired,
 };
 
 export default ImageGallery;

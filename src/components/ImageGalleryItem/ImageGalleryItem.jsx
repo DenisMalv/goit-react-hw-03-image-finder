@@ -2,15 +2,20 @@ import React from 'react';
 import { Item, Image } from './ImageGalleryItem.styled';
 import propTypes from 'prop-types';
 
-const ImageGalleryItem = ({ smalImage, id, modalWindow, modalObject }) => {
+const ImageGalleryItem = ({
+  largeImage,
+  smalImage,
+  toggleModal,
+  modalImage,
+}) => {
   return (
     <Item>
       <Image
         src={smalImage}
         alt="#"
         onClick={() => {
-          modalWindow();
-          modalObject(id);
+          toggleModal();
+          modalImage(largeImage);
         }}
       />
     </Item>
@@ -18,9 +23,10 @@ const ImageGalleryItem = ({ smalImage, id, modalWindow, modalObject }) => {
 };
 
 ImageGalleryItem.propTypes = {
-  id: propTypes.number.isRequired,
   largeImage: propTypes.string.isRequired,
   smalImage: propTypes.string.isRequired,
+  toggleModal: propTypes.func.isRequired,
+  modalImage: propTypes.func.isRequired,
 };
 
 export default ImageGalleryItem;

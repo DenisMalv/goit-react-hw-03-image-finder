@@ -4,14 +4,7 @@ import { LoadMoreButton } from './Button.styled';
 
 // import Loader from '../Loader/Loader';
 
-const Button = ({ status, nextPage }) => {
-  // if (status === '') {
-  //   return '';
-  // }
-  // if (status === 'pending') {
-  //   return <Loader />;
-  // }
-  // if (status === 'resolved') {
+const Button = ({ nextPage }) => {
   return (
     <LoadMoreButton type="button" onClick={nextPage}>
       Load More

@@ -11,7 +11,6 @@ import Modal from './Modal/Modal';
 import galleryApi from '../services/image-gallery-api';
 
 class App extends Component {
-  modalObject = {};
   state = {
     query: '',
     page: 0,
@@ -19,6 +18,7 @@ class App extends Component {
     error: null,
     status: '',
     showModal: false,
+    modalImage: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -58,14 +58,13 @@ class App extends Component {
     this.setState(({ showModal }) => ({ showModal: !showModal }));
   };
 
-  handleModalLargeImage = id => {
-    this.modalObject = this.state.queryResponponce.find(
-      element => element.id === id
-    );
+  handleModalLargeImage = image => {
+    this.setState({ modalImage: image });
   };
 
   render() {
-    const { page, queryResponponce, status, showModal } = this.state;
+    const { page, queryResponponce, status, showModal, modalImage } =
+      this.state;
 
     return (
       <MainContainer>
@@ -75,8 +74,8 @@ class App extends Component {
         {queryResponponce.length !== 0 && (
           <ImageGallery
             images={queryResponponce}
-            modalWindow={this.toggleModal}
-            modalObject={this.handleModalLargeImage}
+            toggleModal={this.toggleModal}
+            modalImage={this.handleModalLargeImage}
           />
         )}
         {status === 'pending' && <Loader />}
@@ -88,15 +87,7 @@ class App extends Component {
           />
         )}
         {showModal && (
-          <>
-            <Modal onClose={this.toggleModal}>
-              <img
-                src={this.modalObject.largeImageURL}
-                alt=""
-                id={this.modalObject.id}
-              />
-            </Modal>
-          </>
+          <Modal onClose={this.toggleModal} largeImage={modalImage} />
         )}
       </MainContainer>
     );

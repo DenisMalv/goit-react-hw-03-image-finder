@@ -7,7 +7,8 @@ const modalRoot = document.querySelector('#modal-root');
 
 class Modal extends Component {
   static propTypes = {
-    children: propTypes.node.isRequired,
+    onClose: propTypes.func.isRequired,
+    largeImage: propTypes.string.isRequired,
   };
 
   componentDidMount() {
@@ -26,7 +27,9 @@ class Modal extends Component {
   render() {
     return createPortal(
       <Overlay onClick={this.handleCloseModal}>
-        <ModalWindow>{this.props.children}</ModalWindow>
+        <ModalWindow>
+          <img src={this.props.largeImage} alt="" />
+        </ModalWindow>
       </Overlay>,
       modalRoot
     );
