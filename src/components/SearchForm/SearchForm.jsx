@@ -4,6 +4,9 @@ import propTypes from 'prop-types';
 import { BiSearchAlt } from 'react-icons/bi';
 
 class SearchForm extends Component {
+  static propTypes = {
+    onSubmit: propTypes.func.isRequired,
+  };
   state = {
     queryValue: '',
   };
@@ -42,9 +45,5 @@ class SearchForm extends Component {
     );
   }
 }
-
-SearchForm.propTypes = {
-  onSubmit: propTypes.func.isRequired,
-};
 
 export default SearchForm;

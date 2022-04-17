@@ -5,6 +5,7 @@ import Searchbar from './Searchbar/Searchbar';
 import SearchForm from './SearchForm/SearchForm';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
+import Loader from './Loader/Loader';
 
 import galleryApi from '../services/image-gallery-api';
 
@@ -58,12 +59,17 @@ class App extends Component {
         <Searchbar>
           <SearchForm onSubmit={this.handleSubmit} />
         </Searchbar>
-        <ImageGallery images={queryResponponce} />
-        <Button
-          currentPage={page}
-          nextPage={this.handleLoadMore}
-          status={status}
-        />
+        {queryResponponce.length !== 0 && (
+          <ImageGallery images={queryResponponce} />
+        )}
+        {status === 'pending' && <Loader />}
+        {status === 'resolved' && (
+          <Button
+            currentPage={page}
+            nextPage={this.handleLoadMore}
+            status={status}
+          />
+        )}
       </MainContainer>
     );
   }
