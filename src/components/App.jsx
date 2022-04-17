@@ -63,8 +63,7 @@ class App extends Component {
   };
 
   render() {
-    const { page, queryResponponce, status, showModal, modalImage } =
-      this.state;
+    const { queryResponponce, status, showModal, modalImage } = this.state;
 
     return (
       <MainContainer>
@@ -79,13 +78,7 @@ class App extends Component {
           />
         )}
         {status === 'pending' && <Loader />}
-        {status === 'resolved' && (
-          <Button
-            currentPage={page}
-            nextPage={this.handleLoadMore}
-            status={status}
-          />
-        )}
+        {status === 'resolved' && <Button nextPage={this.handleLoadMore} />}
         {showModal && (
           <Modal onClose={this.toggleModal} largeImage={modalImage} />
         )}

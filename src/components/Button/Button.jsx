@@ -14,9 +14,7 @@ const Button = ({ nextPage }) => {
 };
 
 Button.propTypes = {
-  currentPage: propTypes.number,
   nextPage: propTypes.func.isRequired,
-  status: propTypes.string.isRequired,
 };
 
 export default Button;
